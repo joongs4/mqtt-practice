@@ -1,5 +1,20 @@
 spring:
   application:
     name: mqtt-practice
+  mqtt:
+    broker:
+      url: tcp://localhost:1883
+      username: admin
+      password: password
+    client:
+      id: spring-mqtt-client
+    topics:
+      - name: topic1
+        qos: 1
+      - name: topic2
+        qos: 1
+      - name: topic3
+        qos: 1
+
 server:
   port: 1234

@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:3.10.2-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"    # AMQP 포트
+      - "15672:15672"  # Management UI 포트
+      - "1883:1883"    # MQTT 포트
+      - "15675:15675"  # MQTT over WebSocket 포트
+    networks:
+      - nextree-iot
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    command: >
+      bash -c "rabbitmq-plugins enable rabbitmq_mqtt rabbitmq_web_mqtt &&
+              rabbitmq-server"
+
+volumes:
+  rabbitmq_data:
+
+networks:
+  nextree-iot:
+    external: true

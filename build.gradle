@@ -21,7 +21,22 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://repo.eclipse.org/content/groups/kura/"
+        name "eclipse-kura-repo"
+    }
+    maven {
+        url "https://repo.eclipse.org/content/repositories/releases/"
+        name "eclipse-releases"
+    }
+    maven {
+        url "https://repo.eclipse.org/content/repositories/snapshots/"
+        name "eclipse-snapshots"
+    }
+
 }
+
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
@@ -29,8 +44,14 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.springframework.boot:spring-boot-starter-integration'
+    implementation 'org.springframework.integration:spring-integration-mqtt'
+    implementation 'com.google.protobuf:protobuf-java:3.24.0'
+
+
+    implementation 'org.eclipse.kura:org.eclipse.kura.core.cloud:1.6.0'
+    implementation 'org.eclipse.kura:org.eclipse.kura.core:1.6.0'
+    implementation 'org.eclipse.kura:org.eclipse.kura.api:2.8.0'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
