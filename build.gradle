@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.2'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.google.protobuf' version '0.9.4'  // Protobuf plugin
 }
 
 group = 'com.example'
@@ -33,9 +34,7 @@ repositories {
         url "https://repo.eclipse.org/content/repositories/snapshots/"
         name "eclipse-snapshots"
     }
-
 }
-
 
 
 dependencies {
@@ -47,11 +46,35 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-integration'
     implementation 'org.springframework.integration:spring-integration-mqtt'
-    implementation 'com.google.protobuf:protobuf-java:3.24.0'
 
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation files('lib/protobuf-java.jar')
 
-    implementation 'org.eclipse.kura:org.eclipse.kura.core.cloud:1.6.0'
-    implementation 'org.eclipse.kura:org.eclipse.kura.core:1.6.0'
-    implementation 'org.eclipse.kura:org.eclipse.kura.api:2.8.0'
 }
 
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.24.0'
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            srcDir "${buildDir}/generated/source/proto/main/java"
+        }
+        proto {
+            srcDir 'src/main/proto'
+        }
+    }
+}
+
+tasks.withType(ProcessResources) {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+
+clean {
+    delete "$buildDir/generated"
+}

@@ -93,7 +93,12 @@ public class MqttConfig {
     }
 
     @Bean
-    public MessageChannel edcChannel() {
+    public MessageChannel edcMqttChannel() {
+        return new DirectChannel();
+    }
+
+    @Bean
+    public MessageChannel edcReplyChannel() {
         return new DirectChannel();
     }
 

@@ -1,6 +1,7 @@
 package com.example.mqttpractice.rest;
 
 
+import com.example.mqttpractice.mqtt.KuraWebClient;
 import com.example.mqttpractice.mqtt.MqttProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +16,17 @@ import java.util.UUID;
 public class TestResource {
     //
     private final MqttProducer mqttProducer;
+    private final KuraWebClient kuraWebClient;
 
     @GetMapping
     public String test() {
         //
         mqttProducer.publishMessage();
         return UUID.randomUUID().toString();
+    }
+
+    @GetMapping("2")
+    public String test2(){
+        return kuraWebClient.test();
     }
 }
